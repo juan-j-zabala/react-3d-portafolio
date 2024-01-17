@@ -5,10 +5,12 @@ import Island from "../models/island"
 import Sky from "../models/Sky"
 import Bird from "../models/Bird"
 import Plane from "../models/Plane"
+import HomeInfo from "../components/HomeInfo"
 
 const Home = () => {
   const [currentStage, setCurrentStage] = useState(1)
   const [isRotating, setIsRotating] = useState(false)
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false)
 
   const adjustIslandForScreenSize = () => {
     let screenScale, screenPostion
@@ -41,9 +43,9 @@ const Home = () => {
   const [planeScale, planePosition] = adjustPlaneForScreenSize()
   return (
     <section className={`w-full h-screen relative`}>
-      {/* <div className=" absolute top-28 left-0 right-0 z-10 flex items-center justify-center"> */}
-      {/*   POPUP */}
-      {/* </div> */}
+      <div className=" absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
+        {currentStage ? <HomeInfo currentStage={currentStage} /> : null}
+      </div>
       <Canvas className={`w-full h-screen bg-transparent ${isRotating ? "cursor-grabbing" : "cursor-grab"}`}
         camera={{ near: 0.1, far: 1000, }}
       >
@@ -59,7 +61,7 @@ const Home = () => {
             intensity={2}
           />
           <Bird />
-          <Sky />
+          <Sky isRotating={isRotating} />
           <Island
             isRotating={isRotating}
             setIsRotating={setIsRotating}
@@ -76,6 +78,10 @@ const Home = () => {
           />
         </Suspense>
       </Canvas>
+      <div>
+        {/* <img alt="jukebox" onClick={() => } /> */}
+
+      </div>
     </section>
   )
 }
